@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_primary"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/myNotestextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:includeFontPadding="false"
+        android:text="My Notes"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/notesSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/searchnotesbg"
+        app:iconifiedByDefault="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/myNotestextView"
+
+        app:queryHint="Search Notes" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/loading"
+      android:visibility="gone"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="@+id/notesSearch"
+
+        app:trackThickness="3dp"
+        app:trackCornerRadius="2dp"
+          app:indicatorColor="@android:color/holo_blue_light"
+        app:layout_constraintStart_toStartOf="@id/notesSearch"
+        app:layout_constraintTop_toBottomOf="@id/notesSearch" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/notesrv"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/quickactionlayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notesSearch"
+
+        android:clipToPadding="false"
+        />
+
+    <LinearLayout
+        android:id="@+id/quickactionlayout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/color_quickactionbg"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageaddnote"
+            android:layout_width="34sp"
+            android:layout_height="34sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_outline_add_circle_outline_24"
+            app:tint="@color/color_white" />
+
+        <ImageView
+            android:id="@+id/imageaddimage"
+            android:layout_width="34sp"
+            android:layout_height="34sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_twotone_image_24"
+            app:tint="@color/color_white" />
+
+        <ImageView
+            android:id="@+id/imageaddweblink"
+            android:layout_width="34sp"
+            android:layout_height="34sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_baseline_language_24"
+            app:tint="@color/color_white" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="45sp"
+        android:layout_height="45sp"
+           android:src="@drawable/ic_outline_add_24"
+        android:id="@+id/addNote"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/quickactionlayout"
+        app:layout_constraintTop_toTopOf="@id/quickactionlayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/addbtnbg"
+        android:layout_marginEnd="12dp"
+        android:padding="5dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
