@@ -43,7 +43,8 @@
 
         app:trackThickness="3dp"
         app:trackCornerRadius="2dp"
-          app:indicatorColor="@android:color/holo_blue_light"
+        app:trackColor="@color/white"
+          app:indicatorColor="@color/teal_700"
         app:layout_constraintStart_toStartOf="@id/notesSearch"
         app:layout_constraintTop_toBottomOf="@id/notesSearch" />
 

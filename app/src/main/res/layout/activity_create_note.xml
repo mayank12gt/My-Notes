@@ -57,6 +57,14 @@
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_baseline_check_circle_outline_24"
                     app:tint="@color/color_Icons" />
+                <ImageView
+                    android:id="@+id/deletebtn"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:visibility="gone"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_baseline_delete_forever_24"
+                    app:tint="@color/color_accent" />
 
 
             </LinearLayout>

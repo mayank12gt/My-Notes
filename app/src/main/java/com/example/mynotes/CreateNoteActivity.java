@@ -7,19 +7,25 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,28 +47,21 @@ import java.util.concurrent.Executors;
 public class CreateNoteActivity extends AppCompatActivity {
 
 
-    ImageView backbtn,addImage,noteImage,addUrl;
+    ImageView backbtn,addImage,noteImage,addUrl,deletebtn;
     EditText noteTitle, noteSubtitle, noteDetails;
     TextView dateTimetv,noteURL;
     public static final int KITKAT_VALUE = 1002;
      Uri imageuri;
      Dialog addUrldialog;
      String url="";
+     Note availableNote=null;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
-
-
-        backbtn = findViewById(R.id.backbtn);
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
 
         noteTitle=findViewById(R.id.noteTitleET);
         noteDetails= findViewById(R.id.noteDetailsET);
@@ -72,15 +71,33 @@ public class CreateNoteActivity extends AppCompatActivity {
         addImage=findViewById(R.id.addimagebtn);
         addUrl = findViewById(R.id.addurlbutton);
         noteURL  =findViewById(R.id.noteURL);
+        backbtn = findViewById(R.id.backbtn);
+        deletebtn = findViewById(R.id.deletebtn);
 
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         dateTimetv.setText(new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.getDefault())
                 .format(new Date()));
+
+        if(getIntent().getBooleanExtra("isUpdate",false)){
+             availableNote = (Note)getIntent().getSerializableExtra("Note");
+            setView();
+        }
 
         ImageView donebtn=findViewById(R.id.donebtn);
         donebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveNote();
+                if (getIntent().getBooleanExtra("isUpdate", false)) {
+                    UpdateNote();
+                } else {
+                    saveNote();
+                }
             }
         });
 
@@ -186,11 +203,77 @@ public class CreateNoteActivity extends AppCompatActivity {
         });
 
 
+        noteImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                registerForContextMenu(noteImage);
+                return false;
+            }
+        });
+    }
 
+    private void deleteNote(Note note) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                NotesDatabase.getInstance(getApplicationContext()).getDao().DeleteNote(note);
 
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CreateNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+                        Intent i= new Intent();
+                        i.putExtra("deleted",true);
+                        setResult(RESULT_OK,i);
 
+                        finish();
+                    }
+                });
 
+            }
+        });
+    }
+
+    private void setView() {
+
+        noteTitle.setText(availableNote.getTitle());
+        noteSubtitle.setText(availableNote.getSubtitle());
+        noteDetails.setText(availableNote.getNoteText());
+        if(!availableNote.getImage_path().isEmpty()) {
+            noteImage.setVisibility(View.VISIBLE);
+            noteImage.setImageURI(Uri.parse(availableNote.getImage_path()));
+            imageuri = Uri.parse(availableNote.getImage_path());
+        }
+
+        dateTimetv.setText(availableNote.getDateTime());
+
+        deletebtn.setVisibility(View.VISIBLE);
+
+        deletebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(CreateNoteActivity.this);
+                builder.setTitle("Delete Note");
+                builder.setMessage("Are you sure you want to delete this note?");
+                builder.setIcon(R.drawable.ic_baseline_delete_forever_24);
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteNote(availableNote);
+
+                    }
+                });
+                builder.show();
+            }
+        });
 
     }
 
@@ -264,6 +347,8 @@ else {
             note.setDateTime(dateTimetv.getText().toString());
             note.setWebLink(url);
 
+
+
             ExecutorService executorService = Executors.newSingleThreadExecutor();
 
             executorService.execute(new Runnable() {
@@ -286,5 +371,74 @@ else {
 
 
         }
+    }
+
+
+    private void UpdateNote(){
+        if(noteTitle.getText().toString().trim().isEmpty()){
+            Toast.makeText(this, "Note Title is empty!", Toast.LENGTH_SHORT).show();
+        }
+
+        else if(noteDetails.getText().toString().trim().isEmpty()){
+            Toast.makeText(this, "Note Detail is empty!", Toast.LENGTH_SHORT).show();
+        }
+
+        else {
+            Note note = availableNote;
+            note.setTitle(noteTitle.getText().toString());
+            note.setSubtitle(noteSubtitle.getText().toString());
+            note.setNoteText(noteDetails.getText().toString());
+            note.setImage_path(imageuri==null?"":imageuri.toString());
+            note.setDateTime(dateTimetv.getText().toString());
+            note.setWebLink(url==null?"":url.trim());
+
+
+
+
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+                            executorService.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    NotesDatabase.getInstance(getApplicationContext()).getDao().UpdateNote(note);
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(CreateNoteActivity.this, "Note Updated", Toast.LENGTH_SHORT).show();
+                                            Intent i= new Intent();
+                                            setResult(RESULT_OK,i);
+
+                            finish();
+                        }
+                    });
+
+                }
+            });
+
+
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.image_menu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.delete_img:
+                 noteImage.setImageURI(null);
+                 noteImage.setVisibility(View.GONE);
+                 imageuri=null;
+
+                Toast.makeText(this, "Image deleted", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onContextItemSelected(item);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.mynotes.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mynotes.CreateNoteActivity;
+import com.example.mynotes.NotesOnClickListener;
 import com.example.mynotes.R;
 import com.example.mynotes.entities.Note;
 
@@ -20,11 +29,13 @@ import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> {
 
-    private List<Note> noteList;
+    private final List<Note> noteList;
     Context context;
-    public NotesAdapter(List<Note> noteList, Context context){
+    NotesOnClickListener listener;
+    public NotesAdapter(List<Note> noteList, Context context, NotesOnClickListener listener, DiffUtil.ItemCallback<Note> itemCallback){
         this.noteList=noteList;
         this.context=context;
+        this.listener= listener;
     }
 
     @NonNull
@@ -34,7 +45,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotesAdapter.viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull NotesAdapter.viewholder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.noteTitle.setText(noteList.get(position).getTitle());
         if(noteList.get(position).getSubtitle().isEmpty()){
@@ -54,6 +65,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> 
 
 
         holder.dateTime.setText(noteList.get(position).getDateTime());
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onNoteClicked(noteList.get(position),position);
+            }
+        });
+
 
     }
 
