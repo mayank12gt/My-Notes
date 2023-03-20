@@ -212,30 +212,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         });
     }
 
-    private void deleteNote(Note note) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                NotesDatabase.getInstance(getApplicationContext()).getDao().DeleteNote(note);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(CreateNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
-                        Intent i= new Intent();
-                        i.putExtra("deleted",true);
-                        setResult(RESULT_OK,i);
-
-                        finish();
-                    }
-                });
-
-            }
-        });
-    }
-
     private void setView() {
 
         noteTitle.setText(availableNote.getTitle());
@@ -418,6 +394,30 @@ else {
 
 
         }
+    }
+
+    private void deleteNote(Note note) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                NotesDatabase.getInstance(getApplicationContext()).getDao().DeleteNote(note);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CreateNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+                        Intent i= new Intent();
+                        i.putExtra("deleted",true);
+                        setResult(RESULT_OK,i);
+
+                        finish();
+                    }
+                });
+
+            }
+        });
     }
 
     @Override

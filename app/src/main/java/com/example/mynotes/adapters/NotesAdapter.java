@@ -33,6 +33,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> 
     Context context;
     NotesOnClickListener listener;
     public NotesAdapter(List<Note> noteList, Context context, NotesOnClickListener listener, DiffUtil.ItemCallback<Note> itemCallback){
+
         this.noteList=noteList;
         this.context=context;
         this.listener= listener;
