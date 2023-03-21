@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
            android:fillViewport="true"
@@ -85,7 +86,7 @@
                 android:maxLines="1"
                 android:textColor="@color/color_white"
                 android:textColorHint="@color/color_text_hint"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutheader" />
 
@@ -97,7 +98,7 @@
                 android:fontFamily="@font/ubuntu"
                 android:includeFontPadding="false"
                 android:textColor="@color/color_Icons"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@id/noteTitleET"
                 app:layout_constraintStart_toStartOf="@+id/noteTitleET"
                 app:layout_constraintTop_toBottomOf="@id/noteTitleET" />
@@ -118,7 +119,7 @@
                 android:textColor="@color/color_white"
                 android:textColorHint="@color/color_text_hint"
 
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/datetimetv" />
 
@@ -144,7 +145,7 @@
 
                 android:visibility="gone"
                 android:textColor="@color/white"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:fontFamily="@font/ubuntu"
                 app:layout_constraintBottom_toTopOf="@id/noteDetailsET"
                 app:layout_constraintEnd_toEndOf="@+id/noteDetailsET"
@@ -169,7 +170,7 @@
                 android:textColor="@color/color_white"
                 android:textColorHint="@color/color_text_hint"
 
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/noteURL" />
 
@@ -200,13 +201,14 @@
                     app:tint="@color/color_white" />
 
                 <ImageView
-                    android:id="@+id/addurlbutton"
+                    android:id="@+id/addcolorbutton"
                     android:layout_width="34sp"
+
                     android:layout_height="34sp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/ic_baseline_language_24"
+                    android:background="@drawable/select_color_btn_bg"
                     app:tint="@color/color_white" />
 
             </LinearLayout>

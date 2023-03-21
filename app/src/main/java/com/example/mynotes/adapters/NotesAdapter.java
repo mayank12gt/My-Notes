@@ -3,6 +3,7 @@ package com.example.mynotes.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +69,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> 
 
         holder.dateTime.setText(noteList.get(position).getDateTime());
 
+        holder.card.setCardBackgroundColor(noteList.get(position).getColor());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +96,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> 
 
        TextView noteTitle,notesubTitle, dateTime;
        ImageView noteImage;
+       CardView card;
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
@@ -99,6 +104,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.viewholder> 
             notesubTitle =itemView.findViewById(R.id.notesubTitletv);
             dateTime = itemView.findViewById(R.id.textdatetime);
             noteImage = itemView.findViewById(R.id.noteImage);
+            card= itemView.findViewById(R.id.layout_card);
 
         }
     }

@@ -43,6 +43,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'io.github.eltos:simpledialogfragments:3.6.4'
 
 
     //Glide

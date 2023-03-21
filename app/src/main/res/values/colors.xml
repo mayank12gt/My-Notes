@@ -6,7 +6,7 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_search_icon">#DBDBDB</color>
     <color name="color_text_hint">#7B7B7B</color>
-    <color name="color_quickactionbg">#2F2D2E</color>
+    <color name="color_quickactionbg">#232323</color>
     <color name="color_Icons">#A4A4A4</color>
     <color name="color_TextSubtitle">#CECECE</color>
     <color name="color_defaultnotecolor">#333333</color>
@@ -18,6 +18,9 @@
     <color name="color_notecolor5">#000000</color>
     <color name="color_delete">#FF4842</color>
     <color name="color_searchbg">#333333</color>
+
+
+
 
 
 

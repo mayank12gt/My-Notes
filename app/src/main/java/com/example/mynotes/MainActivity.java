@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NotesOnClickListe
     private static final Integer REQUEST_CODE_DELETE_NOTE = 4;
     private Timer timer;
     ImageView addNotebtn;
-    Integer noteclickedposition=-1;
+    int noteclickedposition=-1;
 
     List<Note> noteslist;
     RecyclerView notesrv;
@@ -48,17 +48,7 @@ public class MainActivity extends AppCompatActivity implements NotesOnClickListe
     LinearProgressIndicator loading;
     SearchView searchView;
 
-    ActivityResultLauncher<Intent> createNoteActivitylauncher=registerForActivityResult(new ActivityResultContracts
-            .StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode()==RESULT_OK){
-                getNotes(REQUEST_CODE_ADD_NOTE);
 
-            }
-
-        }
-    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,13 +161,15 @@ public class MainActivity extends AppCompatActivity implements NotesOnClickListe
                        else if(requestcode==REQUEST_CODE_UPDATE_NOTE){
                            noteslist.set(noteclickedposition,notes.get(noteclickedposition));
 
-                           notesAdapter.notifyDataSetChanged();
+                           notesAdapter.notifyItemChanged(noteclickedposition);
                        }
                        else if(requestcode==REQUEST_CODE_DELETE_NOTE){
-                           Toast.makeText(MainActivity.this, String.valueOf(noteclickedposition), Toast.LENGTH_SHORT).show();
-                           noteslist.remove((int)noteclickedposition);
 
-                           notesAdapter.notifyItemRemoved((int)noteclickedposition);
+                           noteslist.remove(noteclickedposition);
+
+                           notesAdapter.notifyItemRemoved(noteclickedposition);
+                           ;
+                           notesrv.smoothScrollToPosition(0);
                        }
                        notesrv.smoothScrollToPosition(0);
                    }
@@ -193,14 +185,29 @@ public class MainActivity extends AppCompatActivity implements NotesOnClickListe
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode()==RESULT_OK){
-                Toast.makeText(MainActivity.this,"Correct",Toast.LENGTH_LONG).show();
+
                 if(result.getData().getBooleanExtra("deleted",false)){
                     getNotes(REQUEST_CODE_DELETE_NOTE);
-                    Toast.makeText(MainActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     getNotes(REQUEST_CODE_UPDATE_NOTE);
                 }
+
+            }
+
+        }
+    });
+
+
+
+
+    ActivityResultLauncher<Intent> createNoteActivitylauncher=registerForActivityResult(new ActivityResultContracts
+            .StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode()==RESULT_OK){
+                getNotes(REQUEST_CODE_ADD_NOTE);
 
             }
 

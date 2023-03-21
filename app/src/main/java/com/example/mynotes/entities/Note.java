@@ -28,10 +28,9 @@ public class Note implements Serializable {
     String image_path;
 
     @ColumnInfo(name="color")
-    String color;
+    int color;
 
-    @ColumnInfo(name="web_link")
-    String webLink;
+
 
 
     public int getID() {
@@ -82,21 +81,15 @@ public class Note implements Serializable {
         this.image_path = image_path;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
-    public String getWebLink() {
-        return webLink;
-    }
 
-    public void setWebLink(String webLink) {
-        this.webLink = webLink;
-    }
 
 @NonNull
 @Override

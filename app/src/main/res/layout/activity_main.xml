@@ -56,7 +56,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:paddingEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/quickactionlayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notesSearch"
@@ -64,47 +64,7 @@
         android:clipToPadding="false"
         />
 
-    <LinearLayout
-        android:id="@+id/quickactionlayout"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@color/color_quickactionbg"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/imageaddnote"
-            android:layout_width="34sp"
-            android:layout_height="34sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_outline_add_circle_outline_24"
-            app:tint="@color/color_white" />
-
-        <ImageView
-            android:id="@+id/imageaddimage"
-            android:layout_width="34sp"
-            android:layout_height="34sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_twotone_image_24"
-            app:tint="@color/color_white" />
-
-        <ImageView
-            android:id="@+id/imageaddweblink"
-            android:layout_width="34sp"
-            android:layout_height="34sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_baseline_language_24"
-            app:tint="@color/color_white" />
-
-    </LinearLayout>
 
     <ImageView
         android:layout_width="45sp"
@@ -112,11 +72,11 @@
            android:src="@drawable/ic_outline_add_24"
         android:id="@+id/addNote"
         app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/quickactionlayout"
-        app:layout_constraintTop_toTopOf="@id/quickactionlayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/addbtnbg"
-        android:layout_marginEnd="12dp"
+        android:layout_margin="20dp"
         android:padding="5dp"/>
 
 
