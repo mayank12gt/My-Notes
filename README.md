@@ -7,7 +7,8 @@ Features<br/>
 3.Add background colour to note<br/>
 4.Search for any note<br/>
 5.Clean and minimalist UI<br/>
-6.Screenshots
+
+Screenshots
 
 ![WhatsApp Image 2023-04-12 at 9 11 49 PM](https://user-images.githubusercontent.com/96809211/231511848-ac52e1b4-06aa-4bc6-8eef-128d28cf0c3f.jpeg)
 ![WhatsApp Image 2023-04-12 at 9 12 25 PM](https://user-images.githubusercontent.com/96809211/231512246-4c4d7e56-e757-49f9-bccd-3cfb0d23762a.jpeg)
