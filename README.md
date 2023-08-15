@@ -6,7 +6,6 @@ Features<br/>
 2.Add image to note<br/>
 3.Add background colour to note<br/>
 4.Search for any note<br/>
-5.Clean and minimalist UI<br/>
 
 Screenshots
 
